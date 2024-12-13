@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Full.Stack.Backend.model.User;
 import com.example.Full.Stack.Backend.repository.UserRepository;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
+@CrossOrigin("http://localhost:5176")
 public class UserController {
 
     @Autowired
