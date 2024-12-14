@@ -3,6 +3,7 @@ package com.example.Full.Stack.Backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Full.Stack.Backend.exception.UserNotFoundException;
@@ -35,12 +36,6 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
-    }
-
     @PutMapping("/user/{id}")
     public User updateUser(@RequestBody User newUser, @PathVariable Long id) {
         return userRepository.findById(id)
@@ -59,6 +54,13 @@ public class UserController {
         }
         userRepository.deleteById(id);
         return "User with id" + id + " successfully";
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        return ResponseEntity.ok(user);
     }
 
 }

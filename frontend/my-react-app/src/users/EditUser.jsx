@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { use } from "react";
 
 export default function EditUser() {
   let navigate = useNavigate();
@@ -26,10 +25,19 @@ export default function EditUser() {
     navigate("/");
   };
 
-  useEffect(() => loadUser(), []);
+  useEffect(() => {
+    loadUser();
+  }, []);
+
   const loadUser = async () => {
-    const result = await axios.get(`http://localhost:8080/user/${id}`, user);
+    try {
+      const result = await axios.get(`http://localhost:8080/user/${id}`);
+      setUser(result.data); // Update user state with fetched data
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
   };
+
   return (
     <div className="container">
       <div className="row">
